@@ -1,19 +1,50 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import DeckList from "./components/DeckList";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+export default class App extends Component {
+  decks = {
+    "Deck 1": {
+      title: "Deck 1",
+      questions: [
+        {
+          question: "Question 1",
+          answer: "Answer 1"
+        },
+        {
+          question: "Question 2",
+          answer: "Answer 2"
+        }
+      ]
+    },
+    "Deck 2": {
+      title: "Deck 2",
+      questions: [
+        {
+          question: "Question 1",
+          answer: "Answer 1"
+        },
+        {
+          question: "Question 2",
+          answer: "Answer 2"
+        }
+      ]
+    }
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <DeckList decks={this.decks} />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
