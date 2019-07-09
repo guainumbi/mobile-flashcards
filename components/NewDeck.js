@@ -7,6 +7,7 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
+import { white, pink } from "../utils/colors";
 
 class NewDeck extends Component {
   state = {

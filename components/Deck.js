@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Platform, StyleSheet } from "react-native";
-import { white, rose } from "../colors";
+import { white, rose } from "../utils/colors";
 
 export default function Deck(props) {
   return (

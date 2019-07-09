@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { white, rose } from "../colors";
+import { white, rose } from "../utils/colors";
 
 decks = {
   "Deck 1": {

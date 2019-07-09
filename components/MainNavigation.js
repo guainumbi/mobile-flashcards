@@ -10,7 +10,7 @@ import { Constants } from "expo";
 import DeckList from "./DeckList";
 import NewDeck from "./NewDeck";
 import Deck from "./Deck";
-import { white, pink } from "../colors";
+import { white, pink } from "../utils/colors";
 
 const RouteConfigs = {
   DeckList: {
