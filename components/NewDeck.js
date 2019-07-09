@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, Button } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  Platform,
+  StyleSheet
+} from "react-native";
 
 class NewDeck extends Component {
   state = {
@@ -11,8 +18,9 @@ class NewDeck extends Component {
   };
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TextInput
+          style={styles.textInput}
           placeholder="Title..."
           onChangeText={title => this.setState({ title })}
         />
@@ -23,3 +31,15 @@ class NewDeck extends Component {
 }
 
 export default NewDeck;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center"
+  },
+  textInput: {
+    fontSize: 20,
+    margin: 20
+  }
+});

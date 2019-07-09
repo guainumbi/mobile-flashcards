@@ -6,6 +6,7 @@ import {
   createAppContainer
 } from "react-navigation";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Constants } from "expo";
 import DeckList from "./DeckList";
 import NewDeck from "./NewDeck";
 import { white, pink } from "../colors";
@@ -32,13 +33,11 @@ const RouteConfigs = {
 };
 
 const TabNavigatorConfigs = {
-  navigationOptions: {
-    header: null
-  },
   tabBarOptions: {
     activeTintColor: Platform.OS === "ios" ? pink : white,
     style: {
-      height: 56,
+      height: 60,
+      marginTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight,
       backgroundColor: Platform.OS === "ios" ? white : pink,
       shadowColor: "rgba(0,0,0,0.24)",
       shadowOffset: {

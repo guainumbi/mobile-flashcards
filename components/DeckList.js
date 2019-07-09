@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Platform, StyleSheet } from "react-native";
+
 decks = {
   "Deck 1": {
     title: "Deck 1",
@@ -30,8 +31,8 @@ decks = {
 };
 export default function DeckList(props) {
   return (
-    <View>
-      <Text>Deck List</Text>
+    <View style={styles.container}>
+      <Text style={styles.h2}>Deck List</Text>
       {Object.values(decks).map(deck => (
         <View key={deck.title}>
           <Text>{deck.title}</Text>
@@ -41,3 +42,15 @@ export default function DeckList(props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+  h2: {
+    fontSize: 24,
+    margin: 20
+  }
+});
