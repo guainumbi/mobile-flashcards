@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, View, Platform, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Platform,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { white, rose } from "../colors";
 
 decks = {
@@ -35,10 +41,12 @@ export default function DeckList(props) {
     <View style={styles.container}>
       <Text style={styles.h2}>Deck List</Text>
       {Object.values(decks).map(deck => (
-        <View key={deck.title} style={styles.deck}>
-          <Text style={styles.p}>{deck.title}</Text>
-          <Text style={styles.p}>{deck.questions.length} cards</Text>
-        </View>
+        <TouchableOpacity onPress={() => props.navigation.navigate("Deck")}>
+          <View key={deck.title} style={styles.deck}>
+            <Text style={styles.p}>{deck.title}</Text>
+            <Text style={styles.p}>{deck.questions.length} cards</Text>
+          </View>
+        </TouchableOpacity>
       ))}
     </View>
   );

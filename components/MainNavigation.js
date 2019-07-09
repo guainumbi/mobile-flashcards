@@ -3,12 +3,13 @@ import { Platform } from "react-native";
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
-  createAppContainer
+  createStackNavigator
 } from "react-navigation";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Constants } from "expo";
 import DeckList from "./DeckList";
 import NewDeck from "./NewDeck";
+import Deck from "./Deck";
 import { white, pink } from "../colors";
 
 const RouteConfigs = {
@@ -55,4 +56,19 @@ const Tabs =
     ? createBottomTabNavigator(RouteConfigs, TabNavigatorConfigs)
     : createMaterialTopTabNavigator(RouteConfigs, TabNavigatorConfigs);
 
-export default Tabs;
+const MainNavigation = createStackNavigator({
+  Home: {
+    screen: Tabs
+  },
+  Deck: {
+    screen: Deck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: pink
+      }
+    }
+  }
+});
+
+export default MainNavigation;

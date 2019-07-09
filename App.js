@@ -1,7 +1,7 @@
 import React from "react";
 import { createAppContainer } from "react-navigation";
-import Tabs from "./components/Tabs";
+import MainNavigation from "./components/MainNavigation";
 
-const App = createAppContainer(Tabs);
+const App = createAppContainer(MainNavigation);
 
 export default App;
