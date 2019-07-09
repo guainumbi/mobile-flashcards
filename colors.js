@@ -6,5 +6,7 @@ export const blue = "#0040FF";
 export const purple = "#5A29FF";
 export const pink = "#DF01A5";
 export const mint = "#58FAD0";
+export const lightBlue = "#a3f3f7";
 export const green = "#9AFE2E";
 export const salmon = "#FA8072";
+export const rose = "#e3acd8";

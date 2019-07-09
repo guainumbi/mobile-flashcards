@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, Platform, StyleSheet } from "react-native";
+import { white, rose } from "../colors";
 
 decks = {
   "Deck 1": {
@@ -34,9 +35,9 @@ export default function DeckList(props) {
     <View style={styles.container}>
       <Text style={styles.h2}>Deck List</Text>
       {Object.values(decks).map(deck => (
-        <View key={deck.title}>
-          <Text>{deck.title}</Text>
-          <Text>{deck.questions.length} cards</Text>
+        <View key={deck.title} style={styles.deck}>
+          <Text style={styles.p}>{deck.title}</Text>
+          <Text style={styles.p}>{deck.questions.length} cards</Text>
         </View>
       ))}
     </View>
@@ -52,5 +53,17 @@ const styles = StyleSheet.create({
   h2: {
     fontSize: 24,
     margin: 20
+  },
+  deck: {
+    backgroundColor: rose,
+    borderRadius: Platform.OS === "ios" ? 14 : 2,
+    paddingTop: 50,
+    paddingBottom: 50,
+    paddingLeft: 80,
+    paddingRight: 80
+  },
+  p: {
+    color: white,
+    fontSize: 18
   }
 });
