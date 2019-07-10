@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Text,
   View,
@@ -7,49 +7,41 @@ import {
   TouchableOpacity
 } from "react-native";
 import { white, rose } from "../utils/colors";
+import { fetchDecks } from "../utils/helpers";
 
-decks = {
-  "Deck 1": {
-    title: "Deck 1",
-    questions: [
-      {
-        question: "Question 1",
-        answer: "Answer 1"
-      },
-      {
-        question: "Question 2",
-        answer: "Answer 2"
-      }
-    ]
-  },
-  "Deck 2": {
-    title: "Deck 2",
-    questions: [
-      {
-        question: "Question 1",
-        answer: "Answer 1"
-      },
-      {
-        question: "Question 2",
-        answer: "Answer 2"
-      }
-    ]
+export default class DeckList extends Component {
+  state = {
+    decks: null
+  };
+
+  componentDidMount() {
+    fetchDecks().then(decks =>
+      this.setState(() => ({
+        decks
+      }))
+    );
   }
-};
-export default function DeckList(props) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.h2}>Deck List</Text>
-      {Object.values(decks).map(deck => (
-        <TouchableOpacity onPress={() => props.navigation.navigate("Deck")}>
-          <View key={deck.title} style={styles.deck}>
-            <Text style={styles.p}>{deck.title}</Text>
-            <Text style={styles.p}>{deck.questions.length} cards</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
+
+  render() {
+    const { decks } = this.state;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.h2}>Deck List</Text>
+        {decks &&
+          Object.values(decks).map(deck => (
+            <TouchableOpacity
+              key={deck.title}
+              onPress={() => this.props.navigation.navigate("Deck")}
+            >
+              <View style={styles.deck}>
+                <Text style={styles.p}>{deck.title}</Text>
+                <Text style={styles.p}>{deck.questions.length} cards</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
