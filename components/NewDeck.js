@@ -5,9 +5,10 @@ import {
   TextInput,
   Button,
   Platform,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from "react-native";
-import { white, pink } from "../utils/colors";
+import { white, pink, gray } from "../utils/colors";
 
 class NewDeck extends Component {
   state = {
@@ -25,7 +26,9 @@ class NewDeck extends Component {
           placeholder="Title..."
           onChangeText={title => this.setState({ title })}
         />
-        <Button onPress={this.handleSubmit} title="Create New Deck" />
+        <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+          <Text style={styles.p}>Create New Deck</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -41,6 +44,20 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 20,
-    margin: 20
+    margin: 20,
+    color: gray
+  },
+  p: {
+    color: white,
+    fontSize: 18
+  },
+  button: {
+    borderRadius: Platform.OS === "ios" ? 14 : 2,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 60,
+    paddingRight: 60,
+    marginBottom: 15,
+    backgroundColor: pink
   }
 });

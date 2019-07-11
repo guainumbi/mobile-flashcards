@@ -4,9 +4,10 @@ import {
   View,
   Platform,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from "react-native";
-import { white, rose } from "../utils/colors";
+import { black, blue, white, creme, gold, gray, pink } from "../utils/colors";
 import { fetchDecks } from "../utils/helpers";
 
 export default class DeckList extends Component {
@@ -15,6 +16,7 @@ export default class DeckList extends Component {
   };
 
   componentDidMount() {
+    // AsyncStorage.clear();
     fetchDecks().then(decks =>
       this.setState(() => ({
         decks
@@ -31,7 +33,7 @@ export default class DeckList extends Component {
           Object.values(decks).map(deck => (
             <TouchableOpacity
               key={deck.title}
-              onPress={() => this.props.navigation.navigate("Deck")}
+              onPress={() => this.props.navigation.navigate("Deck", { deck })}
             >
               <View style={styles.deck}>
                 <Text style={styles.p}>{deck.title}</Text>
@@ -52,10 +54,11 @@ const styles = StyleSheet.create({
   },
   h2: {
     fontSize: 24,
-    margin: 20
+    margin: 20,
+    color: pink
   },
   deck: {
-    backgroundColor: rose,
+    backgroundColor: creme,
     borderRadius: Platform.OS === "ios" ? 14 : 2,
     paddingTop: 50,
     paddingBottom: 50,
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     paddingRight: 80
   },
   p: {
-    color: white,
+    color: gray,
     fontSize: 18
   }
 });

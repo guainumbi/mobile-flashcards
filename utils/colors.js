@@ -1,11 +1,13 @@
 export const black = "#000000";
-export const gray = "#BDBDBD";
+export const gray = "#424949";
 export const white = "#fff";
 export const red = "#FF0040";
 export const blue = "#0040FF";
 export const purple = "#5A29FF";
 export const pink = "#DF01A5";
 export const mint = "#58FAD0";
+export const creme = "#EEE0BA";
+export const gold = "#CAA613";
 export const lightBlue = "#a3f3f7";
 export const green = "#9AFE2E";
 export const salmon = "#FA8072";
