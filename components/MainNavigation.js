@@ -10,7 +10,9 @@ import { Constants } from "expo";
 import DeckList from "./DeckList";
 import NewDeck from "./NewDeck";
 import Deck from "./Deck";
-import { white, pink } from "../utils/colors";
+import NewCard from "./NewCard";
+import Quiz from "./Quiz";
+import { black, white, pink, mint, creme, gray } from "../utils/colors";
 
 const RouteConfigs = {
   DeckList: {
@@ -63,9 +65,27 @@ const MainNavigation = createStackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: {
-      headerTintColor: white,
+      headerTintColor: gray,
       headerStyle: {
-        backgroundColor: pink
+        backgroundColor: creme
+      }
+    }
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      headerTintColor: gray,
+      headerStyle: {
+        backgroundColor: mint
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: gray,
+      headerStyle: {
+        backgroundColor: mint
       }
     }
   }
