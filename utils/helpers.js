@@ -8,7 +8,8 @@ starterDecks = {
     questions: [
       {
         question: "Question 1",
-        answer: "Answer 1"
+        answer:
+          "Answer 1 is the very long answer to the first question from the first deck of questions. I hope this helps."
       },
       {
         question: "Question 2",
