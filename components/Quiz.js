@@ -6,24 +6,40 @@ import {
   StyleSheet,
   Platform
 } from "react-native";
+import Result from "./Result";
 import { white, mint, gray, pink, gold } from "../utils/colors";
 
 export default class Quiz extends Component {
   state = {
-    answer: "Show Answer"
+    answer: "Show Answer",
+    score: 0
   };
 
-  handleSubmit = () => {
+  handleSubmit(score) {
     const { navigation } = this.props;
     const { deck, cardIndex } = navigation.state.params;
     const card = deck.questions[cardIndex];
-    this.setState({ answer: "Show Answer" });
-    navigation.navigate("Quiz", { deck, cardIndex: cardIndex + 1 });
-  };
+    this.setState(
+      { answer: "Show Answer", score: this.state.score + score },
+      () => {
+        if (cardIndex + 1 == deck.questions.length) {
+          const score = this.state.score;
+          this.setState({ score: 0 });
+          navigation.navigate("Result", {
+            deck,
+            score: score
+          });
+        } else {
+          navigation.navigate("Quiz", { deck, cardIndex: cardIndex + 1 });
+        }
+      }
+    );
+  }
+
   render() {
     const { deck, cardIndex } = this.props.navigation.state.params;
     const card = deck.questions[cardIndex];
-    const count = 1;
+
     return (
       <View style={styles.container}>
         <Text style={styles.h2}>Quiz</Text>
@@ -40,13 +56,13 @@ export default class Quiz extends Component {
         <View>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: mint }]}
-            onPress={this.handleSubmit}
+            onPress={() => this.handleSubmit(1)}
           >
             <Text style={{ color: gray }}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: pink }]}
-            onPress={this.handleSubmit}
+            onPress={() => this.handleSubmit(0)}
           >
             <Text style={{ color: white }}>False</Text>
           </TouchableOpacity>

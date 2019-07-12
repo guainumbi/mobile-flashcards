@@ -12,6 +12,7 @@ import NewDeck from "./NewDeck";
 import Deck from "./Deck";
 import NewCard from "./NewCard";
 import Quiz from "./Quiz";
+import Result from "./Result";
 import { black, white, pink, mint, creme, gray } from "../utils/colors";
 
 const RouteConfigs = {
@@ -82,6 +83,15 @@ const MainNavigation = createStackNavigator({
   },
   Quiz: {
     screen: Quiz,
+    navigationOptions: {
+      headerTintColor: gray,
+      headerStyle: {
+        backgroundColor: mint
+      }
+    }
+  },
+  Result: {
+    screen: Result,
     navigationOptions: {
       headerTintColor: gray,
       headerStyle: {
