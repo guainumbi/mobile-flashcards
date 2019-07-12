@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import { addCardToDeck } from "../utils/helpers";
 import { pink, mint, gray } from "../utils/colors";
 
 class NewCard extends Component {
@@ -17,7 +18,11 @@ class NewCard extends Component {
   };
 
   handleSubmit = () => {
-    console.log("hi");
+    const { deck } = this.props.navigation.state.params;
+    const card = { question: this.state.question, answer: this.state.answer };
+    addCardToDeck(deck.title, card);
+    this.props.navigation.navigate("Deck", { deck });
+    // rerender Deck to show new question included
   };
   render() {
     return (

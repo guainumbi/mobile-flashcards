@@ -53,3 +53,11 @@ checkDecksResults = results => {
 export function fetchDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(checkDecksResults);
 }
+
+export function addCardToDeck(title, card) {
+  AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
+    const data = JSON.parse(decks);
+    data[title].questions.push(card);
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  });
+}
