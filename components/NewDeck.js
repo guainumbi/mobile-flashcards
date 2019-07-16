@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import { addDeck } from "../utils/helpers";
 import { white, pink, gray } from "../utils/colors";
 
 class NewDeck extends Component {
@@ -16,7 +17,10 @@ class NewDeck extends Component {
   };
 
   handleSubmit = () => {
-    console.log("hi");
+    const { title } = this.state;
+    addDeck(title).then(newDeck => {
+      this.props.navigation.navigate("Deck", { deck: newDeck });
+    });
   };
   render() {
     return (
@@ -26,7 +30,11 @@ class NewDeck extends Component {
           placeholder="Title..."
           onChangeText={title => this.setState({ title })}
         />
-        <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this.handleSubmit}
+          disabled={this.state.title === ""}
+        >
           <Text style={styles.p}>Create New Deck</Text>
         </TouchableOpacity>
       </View>
