@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { addCardToDeck } from "../utils/helpers";
+import { addCardToDeck, fetchDeck } from "../utils/helpers";
 import { pink, mint, gray } from "../utils/colors";
 
 class NewCard extends Component {
@@ -20,9 +20,12 @@ class NewCard extends Component {
   handleSubmit = () => {
     const { deck } = this.props.navigation.state.params;
     const card = { question: this.state.question, answer: this.state.answer };
-    addCardToDeck(deck.title, card);
-    this.props.navigation.navigate("Deck", { deck });
-    // rerender Deck to show new question included
+
+    addCardToDeck(deck.id, card).then(() => {
+      fetchDeck(deck.id).then(updatedDeck => {
+        this.props.navigation.navigate("Deck", { deck: updatedDeck });
+      });
+    });
   };
   render() {
     return (
@@ -37,7 +40,11 @@ class NewCard extends Component {
           placeholder="Answer..."
           onChangeText={answer => this.setState({ answer })}
         />
-        <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this.handleSubmit}
+          disabled={this.state.question === "" || this.state.answer === ""}
+        >
           <Text style={{ color: gray, fontSize: 18 }}>Create New Card</Text>
         </TouchableOpacity>
       </View>
