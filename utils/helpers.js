@@ -3,7 +3,8 @@ import { AsyncStorage } from "react-native";
 export const DECKS_STORAGE_KEY = "mobile-flashcards:decks";
 
 starterDecks = {
-  "Deck 1": {
+  "1": {
+    id: "1",
     title: "Deck 1",
     questions: [
       {
@@ -21,7 +22,8 @@ starterDecks = {
       }
     ]
   },
-  "Deck 2": {
+  "2": {
+    id: "2",
     title: "Deck 2",
     questions: [
       {
@@ -34,6 +36,17 @@ starterDecks = {
       }
     ]
   }
+};
+
+generateID = () => {
+  return (
+    Math.random()
+      .toString(36)
+      .substring(2, 15) +
+    Math.random()
+      .toString(36)
+      .substring(2, 15)
+  );
 };
 
 setStarterDecks = () => {
@@ -54,10 +67,27 @@ export function fetchDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(checkDecksResults);
 }
 
-export function addCardToDeck(title, card) {
-  AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
+export function addCardToDeck(id, card) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
     const data = JSON.parse(decks);
-    data[title].questions.push(card);
+    data[id].questions.push(card);
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  });
+}
+
+export function fetchDeck(id) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
+    const data = JSON.parse(decks);
+    return data[id];
+  });
+}
+
+export function addDeck(title) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
+    const data = JSON.parse(decks);
+    const id = generateID();
+    data[id] = { id, title, questions: [] };
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+    return data[id];
   });
 }
