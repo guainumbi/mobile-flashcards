@@ -23,6 +23,7 @@ export default class Deck extends Component {
           <TouchableOpacity
             style={[styles.button, { borderColor: pink, borderWidth: 1 }]}
             onPress={() => navigation.navigate("Quiz", { deck, cardIndex: 0 })}
+            disabled={deck.questions[0] === undefined}
           >
             <Text style={{ color: pink }}>Start Quiz</Text>
           </TouchableOpacity>
