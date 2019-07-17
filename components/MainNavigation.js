@@ -21,7 +21,7 @@ const RouteConfigs = {
     navigationOptions: {
       tabBarLabel: "Deck List",
       tabBarIcon: ({ tintColor }) => (
-        <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
+        <Ionicons name="ios-list-box" size={30} color={tintColor} />
       )
     }
   },
