@@ -4,10 +4,17 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Platform
+  Platform,
+  NativeModules,
+  LayoutAnimation
 } from "react-native";
 import Result from "./Result";
 import { white, mint, gray, pink, gold } from "../utils/colors";
+
+const { UIManager } = NativeModules;
+
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export default class Quiz extends Component {
   state = {
@@ -36,6 +43,14 @@ export default class Quiz extends Component {
     );
   }
 
+  handleShowCard = () => {
+    const { deck, cardIndex } = this.props.navigation.state.params;
+    const card = deck.questions[cardIndex];
+
+    this.setState({ answer: card.answer });
+
+    LayoutAnimation.spring();
+  };
   render() {
     const { deck, cardIndex } = this.props.navigation.state.params;
     const card = deck.questions[cardIndex];
@@ -49,7 +64,7 @@ export default class Quiz extends Component {
         <Text style={styles.p}>{card.question}</Text>
         <TouchableOpacity
           style={styles.answerCard}
-          onPress={() => this.setState({ answer: card.answer })}
+          onPress={() => this.handleShowCard()}
         >
           <Text style={{ color: gold }}>{this.state.answer}</Text>
         </TouchableOpacity>
