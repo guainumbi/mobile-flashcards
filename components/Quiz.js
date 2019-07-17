@@ -72,12 +72,14 @@ export default class Quiz extends Component {
           <TouchableOpacity
             style={[styles.button, { backgroundColor: mint }]}
             onPress={() => this.handleSubmit(1)}
+            disabled={this.state.answer === "Show Answer"}
           >
             <Text style={{ color: gray }}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: pink }]}
             onPress={() => this.handleSubmit(0)}
+            disabled={this.state.answer === "Show Answer"}
           >
             <Text style={{ color: white }}>False</Text>
           </TouchableOpacity>
