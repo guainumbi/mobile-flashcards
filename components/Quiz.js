@@ -9,6 +9,7 @@ import {
   LayoutAnimation
 } from "react-native";
 import Result from "./Result";
+import { registerQuizCompleted } from "../utils/helpers";
 import { white, mint, gray, pink, gold } from "../utils/colors";
 
 const { UIManager } = NativeModules;
@@ -32,6 +33,7 @@ export default class Quiz extends Component {
         if (cardIndex + 1 == deck.questions.length) {
           const score = this.state.score;
           this.setState({ score: 0 });
+          registerQuizCompleted();
           navigation.navigate("Result", {
             deck,
             score: score

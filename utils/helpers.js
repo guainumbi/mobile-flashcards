@@ -1,6 +1,8 @@
 import { AsyncStorage } from "react-native";
+import { Notifications, Permissions } from "expo";
 
 export const DECKS_STORAGE_KEY = "mobile-flashcards:decks";
+export const REMINDER_STORAGE_KEY = "mobile-flashcards:reminder";
 
 starterDecks = {
   "1": {
@@ -63,6 +65,61 @@ checkDecksResults = results => {
   return results === null ? setStarterDecks() : getDecks(JSON.parse(results));
 };
 
+fetchDate = () => {
+  return AsyncStorage.getItem(DATE_STORAGE_KEY).then(date => {
+    const lastQuiz = JSON.parse(date);
+    return lastQuiz;
+  });
+};
+
+clearLocalNotifications = () => {
+  return AsyncStorage.removeItem(REMINDER_STORAGE_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync
+  );
+};
+
+createNotification = () => {
+  return {
+    title: "Take a quiz!",
+    body: "📚 Don't forget to study today!",
+    ios: {
+      sound: true
+    },
+    android: {
+      sound: true,
+      priority: "high",
+      sticky: false,
+      vibrate: true
+    }
+  };
+};
+
+setLocalNotification = () => {
+  AsyncStorage.getItem(REMINDER_STORAGE_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+          if (status === "granted") {
+            Notifications.cancelAllScheduledNotificationsAsync();
+
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(18);
+            tomorrow.setMinutes(0);
+
+            Notifications.scheduleLocalNotificationAsync(createNotification(), {
+              time: tomorrow,
+              repeat: "day"
+            });
+
+            AsyncStorage.setItem(REMINDER_STORAGE_KEY, JSON.stringify(true));
+          }
+        });
+      }
+    });
+};
+
 export function fetchDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(checkDecksResults);
 }
@@ -89,5 +146,11 @@ export function addDeck(title) {
     data[id] = { id, title, questions: [] };
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
     return data[id];
+  });
+}
+
+export function registerQuizCompleted() {
+  clearLocalNotifications().then(() => {
+    setLocalNotification();
   });
 }
