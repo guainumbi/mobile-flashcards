@@ -6,9 +6,17 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { black, white, yellow, pink, gold, gray } from "../utils/colors";
+import { removeDeck } from "../utils/helpers";
+import { black, white, yellow, pink, gold, gray, red } from "../utils/colors";
 
 export default class Deck extends Component {
+  handleRemoveDeck = () => {
+    const { navigation } = this.props;
+    const { deck } = navigation.state.params;
+    removeDeck(deck.id).then(updatedDecks => {
+      navigation.navigate("DeckList", { decks: updatedDecks });
+    });
+  };
   render() {
     const { navigation } = this.props;
     const { deck } = navigation.state.params;
@@ -19,19 +27,22 @@ export default class Deck extends Component {
           <Text style={styles.p}>{deck.title}</Text>
           <Text style={styles.p}>{deck.questions.length} cards</Text>
         </View>
+        <TouchableOpacity onPress={() => this.handleRemoveDeck()}>
+          <Text style={{ color: red }}>Remove Deck</Text>
+        </TouchableOpacity>
         <View>
           <TouchableOpacity
             style={[styles.button, { borderColor: pink, borderWidth: 1 }]}
             onPress={() => navigation.navigate("Quiz", { deck, cardIndex: 0 })}
             disabled={deck.questions[0] === undefined}
           >
-            <Text style={{ color: pink }}>Start Quiz</Text>
+            <Text style={{ color: pink, fontSize: 18 }}>Start Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: pink }]}
             onPress={() => navigation.navigate("NewCard", { deck })}
           >
-            <Text style={{ color: white }}>Add Card</Text>
+            <Text style={{ color: white, fontSize: 18 }}>Add Card</Text>
           </TouchableOpacity>
         </View>
       </View>

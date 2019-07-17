@@ -149,6 +149,29 @@ export function addDeck(title) {
   });
 }
 
+export function removeCard(id, card) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
+    let data = JSON.parse(decks);
+    const deckQuestions = data[id].questions.filter(
+      question =>
+        question.question !== card.question && question.answer !== card.answer
+    );
+    data[id].questions = deckQuestions;
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+    return data[id];
+  });
+}
+
+export function removeDeck(id) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
+    const data = JSON.parse(decks);
+    data[id] = undefined;
+    delete data[id];
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+    return data;
+  });
+}
+
 export function registerQuizCompleted() {
   clearLocalNotifications().then(() => {
     setLocalNotification();

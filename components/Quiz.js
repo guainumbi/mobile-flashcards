@@ -9,8 +9,8 @@ import {
   LayoutAnimation
 } from "react-native";
 import Result from "./Result";
-import { registerQuizCompleted } from "../utils/helpers";
-import { white, mint, gray, pink, gold } from "../utils/colors";
+import { registerQuizCompleted, removeCard } from "../utils/helpers";
+import { white, mint, gray, pink, gold, red } from "../utils/colors";
 
 const { UIManager } = NativeModules;
 
@@ -45,6 +45,14 @@ export default class Quiz extends Component {
     );
   }
 
+  handleRemoveCard = () => {
+    const { deck, cardIndex } = this.props.navigation.state.params;
+    const card = deck.questions[cardIndex];
+    removeCard(deck.id, card).then(updatedDeck => {
+      this.props.navigation.navigate("Deck", { deck: updatedDeck });
+    });
+  };
+
   handleShowCard = () => {
     const { deck, cardIndex } = this.props.navigation.state.params;
     const card = deck.questions[cardIndex];
@@ -68,7 +76,10 @@ export default class Quiz extends Component {
           style={styles.answerCard}
           onPress={() => this.handleShowCard()}
         >
-          <Text style={{ color: gold }}>{this.state.answer}</Text>
+          <Text style={{ color: gold, fontSize: 18 }}>{this.state.answer}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.handleRemoveCard()}>
+          <Text style={{ color: red }}>Remove Card</Text>
         </TouchableOpacity>
         <View>
           <TouchableOpacity
@@ -76,14 +87,14 @@ export default class Quiz extends Component {
             onPress={() => this.handleSubmit(1)}
             disabled={this.state.answer === "Show Answer"}
           >
-            <Text style={{ color: gray }}>Correct</Text>
+            <Text style={{ color: gray, fontSize: 18 }}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: pink }]}
             onPress={() => this.handleSubmit(0)}
             disabled={this.state.answer === "Show Answer"}
           >
-            <Text style={{ color: white }}>False</Text>
+            <Text style={{ color: white, fontSize: 18 }}>False</Text>
           </TouchableOpacity>
         </View>
       </View>

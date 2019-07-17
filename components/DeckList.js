@@ -26,7 +26,9 @@ export default class DeckList extends Component {
   }
 
   render() {
-    const { decks } = this.state;
+    const { decks } = this.props.navigation.state.params
+      ? this.props.navigation.state.params
+      : this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.h2}>Deck List</Text>
