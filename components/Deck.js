@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { black, white, creme, pink, gold, gray } from "../utils/colors";
+import { black, white, yellow, pink, gold, gray } from "../utils/colors";
 
 export default class Deck extends Component {
   render() {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     color: pink
   },
   deck: {
-    backgroundColor: creme,
+    backgroundColor: yellow,
     borderRadius: Platform.OS === "ios" ? 14 : 2,
     paddingTop: 50,
     paddingBottom: 50,

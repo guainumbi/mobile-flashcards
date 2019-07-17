@@ -5,9 +5,10 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from "react-native";
-import { black, blue, white, creme, gold, gray, pink } from "../utils/colors";
+import { black, blue, white, yellow, gold, gray, pink } from "../utils/colors";
 import { fetchDecks } from "../utils/helpers";
 
 export default class DeckList extends Component {
@@ -29,18 +30,28 @@ export default class DeckList extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.h2}>Deck List</Text>
-        {decks &&
-          Object.values(decks).map(deck => (
-            <TouchableOpacity
-              key={deck.title}
-              onPress={() => this.props.navigation.navigate("Deck", { deck })}
-            >
-              <View style={styles.deck}>
-                <Text style={styles.p}>{deck.title}</Text>
-                <Text style={styles.p}>{deck.questions.length} cards</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+        {decks && (
+          <FlatList
+            data={Object.values(decks)}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  style={{ margin: 5 }}
+                  key={item.id}
+                  onPress={() =>
+                    this.props.navigation.navigate("Deck", { deck: item })
+                  }
+                >
+                  <View style={styles.deck}>
+                    <Text style={styles.p}>{item.title}</Text>
+                    <Text style={styles.p}>{item.questions.length} cards</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        )}
       </View>
     );
   }
@@ -54,11 +65,11 @@ const styles = StyleSheet.create({
   },
   h2: {
     fontSize: 24,
-    margin: 20,
+    margin: 40,
     color: pink
   },
   deck: {
-    backgroundColor: creme,
+    backgroundColor: yellow,
     borderRadius: Platform.OS === "ios" ? 14 : 2,
     paddingTop: 50,
     paddingBottom: 50,

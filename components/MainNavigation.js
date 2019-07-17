@@ -13,7 +13,7 @@ import Deck from "./Deck";
 import NewCard from "./NewCard";
 import Quiz from "./Quiz";
 import Result from "./Result";
-import { black, white, pink, mint, creme, gray } from "../utils/colors";
+import { black, white, pink, mint, yellow, gray } from "../utils/colors";
 
 const RouteConfigs = {
   DeckList: {
@@ -68,7 +68,7 @@ const MainNavigation = createStackNavigator({
     navigationOptions: {
       headerTintColor: gray,
       headerStyle: {
-        backgroundColor: creme
+        backgroundColor: yellow
       }
     }
   },
