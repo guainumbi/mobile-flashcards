@@ -3,7 +3,7 @@
 React native app for ios and android
 
 Create study cards and test yourself in a quiz.
-You can manage cards in decks, each card holds a question and a conceiled answer.
+You can manage cards in decks, each card holds a question and a concealed answer.
 
 To get started run:
 
