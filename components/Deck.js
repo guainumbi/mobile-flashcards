@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Text,
   View,
@@ -6,17 +7,22 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { removeDeck } from "../utils/helpers";
+import { removeDeckFromAsyncStorage } from "../utils/helpers";
+import { removeDeck } from "../actions";
 import { black, white, yellow, pink, gold, gray, red } from "../utils/colors";
 
-export default class Deck extends Component {
+class Deck extends Component {
   handleRemoveDeck = () => {
     const { navigation } = this.props;
     const { deck } = navigation.state.params;
-    removeDeck(deck.id).then(updatedDecks => {
-      navigation.navigate("DeckList", { decks: updatedDecks });
-    });
+    this.props.dispatch(
+      removeDeck(deck.id),
+      removeDeckFromAsyncStorage(deck.id).then(() => {
+        navigation.navigate("DeckList");
+      })
+    );
   };
+
   render() {
     const { navigation } = this.props;
     const { deck } = navigation.state.params;
@@ -49,6 +55,8 @@ export default class Deck extends Component {
     );
   }
 }
+
+export default connect()(Deck);
 
 const styles = StyleSheet.create({
   container: {

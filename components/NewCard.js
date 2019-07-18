@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Text,
   View,
@@ -8,7 +9,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { addCardToDeck, fetchDeck } from "../utils/helpers";
+import { addCardToAsyncStorage, fetchDeck } from "../utils/helpers";
+import { addCard } from "../actions";
 import { pink, mint, gray } from "../utils/colors";
 
 class NewCard extends Component {
@@ -21,11 +23,14 @@ class NewCard extends Component {
     const { deck } = this.props.navigation.state.params;
     const card = { question: this.state.question, answer: this.state.answer };
 
-    addCardToDeck(deck.id, card).then(() => {
-      fetchDeck(deck.id).then(updatedDeck => {
-        this.props.navigation.navigate("Deck", { deck: updatedDeck });
-      });
-    });
+    this.props.dispatch(
+      addCard(deck.id, card),
+      addCardToAsyncStorage(deck.id, card).then(() => {
+        fetchDeck(deck.id).then(updatedDeck => {
+          this.props.navigation.navigate("Deck", { deck: updatedDeck });
+        });
+      })
+    );
   };
   render() {
     return (
@@ -52,7 +57,7 @@ class NewCard extends Component {
   }
 }
 
-export default NewCard;
+export default connect()(NewCard);
 
 const styles = StyleSheet.create({
   container: {

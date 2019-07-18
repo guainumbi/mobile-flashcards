@@ -40,7 +40,7 @@ starterDecks = {
   }
 };
 
-generateID = () => {
+export function generateID() {
   return (
     Math.random()
       .toString(36)
@@ -49,7 +49,7 @@ generateID = () => {
       .toString(36)
       .substring(2, 15)
   );
-};
+}
 
 setStarterDecks = () => {
   AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(starterDecks));
@@ -124,7 +124,7 @@ export function fetchDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(checkDecksResults);
 }
 
-export function addCardToDeck(id, card) {
+export function addCardToAsyncStorage(id, card) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
     const data = JSON.parse(decks);
     data[id].questions.push(card);
@@ -139,17 +139,15 @@ export function fetchDeck(id) {
   });
 }
 
-export function addDeck(title) {
+export function addDeckToAsyncStorage(deck) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
     const data = JSON.parse(decks);
-    const id = generateID();
-    data[id] = { id, title, questions: [] };
+    data[deck.id] = deck;
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
-    return data[id];
   });
 }
 
-export function removeCard(id, card) {
+export function removeCardFromAsyncStorage(id, card) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
     let data = JSON.parse(decks);
     const deckQuestions = data[id].questions.filter(
@@ -162,7 +160,7 @@ export function removeCard(id, card) {
   });
 }
 
-export function removeDeck(id) {
+export function removeDeckFromAsyncStorage(id) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(decks => {
     const data = JSON.parse(decks);
     data[id] = undefined;

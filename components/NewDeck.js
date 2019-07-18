@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Text,
   View,
@@ -8,7 +9,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { addDeck } from "../utils/helpers";
+import { addDeckToAsyncStorage, generateID } from "../utils/helpers";
+import { addDeck } from "../actions";
 import { white, pink, gray } from "../utils/colors";
 
 class NewDeck extends Component {
@@ -16,11 +18,30 @@ class NewDeck extends Component {
     title: ""
   };
 
+  resetTitle = () => {
+    this.setState(() => ({
+      title: ""
+    }));
+  };
+
   handleSubmit = () => {
     const { title } = this.state;
-    addDeck(title).then(newDeck => {
-      this.props.navigation.navigate("Deck", { deck: newDeck });
-    });
+    const { dispatch } = this.props;
+
+    const newDeck = {
+      id: generateID(),
+      title,
+      questions: []
+    };
+
+    this.resetTitle();
+
+    dispatch(
+      addDeck(newDeck),
+      addDeckToAsyncStorage(newDeck).then(() => {
+        this.props.navigation.navigate("Deck", { deck: newDeck });
+      })
+    );
   };
   render() {
     return (
@@ -28,6 +49,7 @@ class NewDeck extends Component {
         <TextInput
           style={styles.textInput}
           placeholder="Title..."
+          value={this.state.title}
           onChangeText={title => this.setState({ title })}
         />
         <TouchableOpacity
@@ -42,7 +64,7 @@ class NewDeck extends Component {
   }
 }
 
-export default NewDeck;
+export default connect()(NewDeck);
 
 const styles = StyleSheet.create({
   container: {

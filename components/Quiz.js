@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   View,
   Text,
@@ -9,7 +10,11 @@ import {
   LayoutAnimation
 } from "react-native";
 import Result from "./Result";
-import { registerQuizCompleted, removeCard } from "../utils/helpers";
+import {
+  registerQuizCompleted,
+  removeCardFromAsyncStorage
+} from "../utils/helpers";
+import { removeCard } from "../actions";
 import { white, mint, gray, pink, gold, red } from "../utils/colors";
 
 const { UIManager } = NativeModules;
@@ -17,7 +22,7 @@ const { UIManager } = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
   UIManager.setLayoutAnimationEnabledExperimental(true);
 
-export default class Quiz extends Component {
+class Quiz extends Component {
   state = {
     answer: "Show Answer",
     score: 0
@@ -27,17 +32,18 @@ export default class Quiz extends Component {
     const { navigation } = this.props;
     const { deck, cardIndex } = navigation.state.params;
     const card = deck.questions[cardIndex];
+
     this.setState(
       { answer: "Show Answer", score: this.state.score + score },
       () => {
         if (cardIndex + 1 == deck.questions.length) {
           const score = this.state.score;
+
           this.setState({ score: 0 });
+
           registerQuizCompleted();
-          navigation.navigate("Result", {
-            deck,
-            score: score
-          });
+
+          navigation.navigate("Result", { deck, score });
         } else {
           navigation.navigate("Quiz", { deck, cardIndex: cardIndex + 1 });
         }
@@ -48,9 +54,13 @@ export default class Quiz extends Component {
   handleRemoveCard = () => {
     const { deck, cardIndex } = this.props.navigation.state.params;
     const card = deck.questions[cardIndex];
-    removeCard(deck.id, card).then(updatedDeck => {
-      this.props.navigation.navigate("Deck", { deck: updatedDeck });
-    });
+
+    this.props.dispatch(
+      removeCard(deck.id, card),
+      removeCardFromAsyncStorage(deck.id, card).then(updatedDeck => {
+        this.props.navigation.navigate("Deck", { deck: updatedDeck });
+      })
+    );
   };
 
   handleShowCard = () => {
@@ -101,6 +111,8 @@ export default class Quiz extends Component {
     );
   }
 }
+
+export default connect()(Quiz);
 
 const styles = StyleSheet.create({
   container: {

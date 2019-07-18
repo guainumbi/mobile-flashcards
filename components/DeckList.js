@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Text,
   View,
@@ -10,25 +11,18 @@ import {
 } from "react-native";
 import { black, blue, white, yellow, gold, gray, pink } from "../utils/colors";
 import { fetchDecks } from "../utils/helpers";
+import { initializeDecks } from "../actions";
 
-export default class DeckList extends Component {
-  state = {
-    decks: null
-  };
-
+class DeckList extends Component {
   componentDidMount() {
     // AsyncStorage.clear();
-    fetchDecks().then(decks =>
-      this.setState(() => ({
-        decks
-      }))
-    );
+    fetchDecks().then(decks => {
+      this.props.dispatch(initializeDecks(decks));
+    });
   }
 
   render() {
-    const { decks } = this.props.navigation.state.params
-      ? this.props.navigation.state.params
-      : this.state;
+    const { decks } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.h2}>Deck List</Text>
@@ -58,6 +52,12 @@ export default class DeckList extends Component {
     );
   }
 }
+
+function mapStateToProps(decks) {
+  return { decks };
+}
+
+export default connect(mapStateToProps)(DeckList);
 
 const styles = StyleSheet.create({
   container: {
