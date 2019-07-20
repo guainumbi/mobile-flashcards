@@ -26,7 +26,10 @@ function decks(state = {}, action) {
         }
       };
     case REMOVE_DECK:
-      return Object.values(state).filter(deck => deck.id !== action.id);
+      const newState = {};
+      Object.assign(newState, state);
+      delete newState[action.id];
+      return newState;
     case REMOVE_CARD:
       return {
         ...state,
