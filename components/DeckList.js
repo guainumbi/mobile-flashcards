@@ -6,7 +6,6 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
-  AsyncStorage,
   FlatList
 } from "react-native";
 import { yellow, gray, pink } from "../utils/colors";
@@ -15,7 +14,6 @@ import { initializeDecks } from "../actions";
 
 class DeckList extends Component {
   componentDidMount() {
-    // AsyncStorage.clear();
     fetchDecks().then(decks => {
       this.props.dispatch(initializeDecks(decks));
     });
