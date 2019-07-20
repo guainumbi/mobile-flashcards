@@ -6,7 +6,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
-import { Constants } from "expo";
+import Constants from "expo-constants";
 import DeckList from "./DeckList";
 import NewDeck from "./NewDeck";
 import Deck from "./Deck";
