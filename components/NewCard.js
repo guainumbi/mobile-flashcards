@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { addCardToAsyncStorage, fetchDeck } from "../utils/helpers";
 import { addCard } from "../actions";
-import { pink, mint, gray } from "../utils/colors";
+import { mint, gray } from "../utils/colors";
 
 class NewCard extends Component {
   state = {

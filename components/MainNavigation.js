@@ -13,7 +13,7 @@ import Deck from "./Deck";
 import NewCard from "./NewCard";
 import Quiz from "./Quiz";
 import Result from "./Result";
-import { black, white, pink, mint, yellow, gray } from "../utils/colors";
+import { white, pink, mint, yellow, gray } from "../utils/colors";
 
 const RouteConfigs = {
   DeckList: {

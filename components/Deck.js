@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { removeDeckFromAsyncStorage } from "../utils/helpers";
 import { removeDeck } from "../actions";
-import { black, white, yellow, pink, gold, gray, red } from "../utils/colors";
+import { white, yellow, pink, gray, red } from "../utils/colors";
 
 class Deck extends Component {
   handleRemoveDeck = () => {

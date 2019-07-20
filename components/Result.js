@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Platform
 } from "react-native";
-import { mint, pink, white, gray } from "../utils/colors";
+import { pink, white, gray } from "../utils/colors";
 
 export default class Result extends Component {
   render() {

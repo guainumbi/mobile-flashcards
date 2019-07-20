@@ -9,7 +9,7 @@ import {
   AsyncStorage,
   FlatList
 } from "react-native";
-import { black, blue, white, yellow, gold, gray, pink } from "../utils/colors";
+import { yellow, gray, pink } from "../utils/colors";
 import { fetchDecks } from "../utils/helpers";
 import { initializeDecks } from "../actions";
 
