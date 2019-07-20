@@ -61,7 +61,10 @@ const Tabs =
 
 const MainNavigation = createStackNavigator({
   Home: {
-    screen: Tabs
+    screen: Tabs,
+    navigationOptions: {
+      header: Platform.OS === "android" && null
+    }
   },
   Deck: {
     screen: Deck,
