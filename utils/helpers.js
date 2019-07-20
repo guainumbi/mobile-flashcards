@@ -12,8 +12,7 @@ starterDecks = {
     questions: [
       {
         question: "Question 1",
-        answer:
-          "Answer 1 is the very long answer to the first question from the first deck of questions. I hope this helps."
+        answer: "Answer 1"
       },
       {
         question: "Question 2",
@@ -27,15 +26,15 @@ starterDecks = {
   },
   "2": {
     id: "2",
-    title: "Deck 2",
+    title: "Second Deck",
     questions: [
       {
-        question: "Question 1",
-        answer: "Answer 1"
+        question: "Is this the first question for Deck 2?",
+        answer: "Yes."
       },
       {
-        question: "Question 2",
-        answer: "Answer 2"
+        question: "What is a deck?",
+        answer: "A collection of cards."
       }
     ]
   }
